@@ -1,9 +1,9 @@
 from sqlalchemy import Column, Integer, String
 
-from .database import Base
+from database import Base
 
 
-class GameItem(Base):
+class Game(Base):
     __tablename__ = 'Games'
     id = Column(Integer, primary_key=True, autoincrement=True, unique=True, nullable=False)
     name = Column(String, nullable=False)
