@@ -1,6 +1,8 @@
 fastapi
 beautifulsoup4
 uvicorn
+gunicorn
 requests
 sqlalchemy
 pydantic
+psycopg2

@@ -3,6 +3,7 @@ from pydantic import BaseModel, HttpUrl
 class GameBase(BaseModel):
     id: int
     name: str
+    price: str
     cover_url: HttpUrl
     description: str
 
