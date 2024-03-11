@@ -18,15 +18,23 @@ def parse_name_list():
             doc = requests.get(name["href"])
             soup = BeautifulSoup(doc.text, "html.parser")
             parse_cover_url = soup.find_all("img")[1]
-            parse_description = soup.find("p", {"data-qa": "mfe-game-overview#description"}).text
+
+            try:
+                parse_description = soup.find("p", {"data-qa": "mfe-game-overview#description"}).text
+            except AttributeError:
+                parse_description = soup.find("div", {"data-ol-order-start": "1"}).find_all("p")[0].text
+
             parse_price = soup.find("span", {"data-qa": "mfeCtaMain#offer0#finalPrice"})
-            publisher = soup.find("div", {"data-qa": "mfe-game-title#publisher"}).text
-            release_date = soup.find("dd", {"data-qa": "gameInfo#releaseInformation#releaseDate-value"}).text
 
             if parse_price == None:
                 parse_price = "Not available for purchase"
             else:
                 parse_price = parse_price.text
+
+            try:
+                publisher = soup.find("div", {"data-qa": "mfe-game-title#publisher"}).text
+            except AttributeError:
+                publisher = soup.find("div", class_="publisher").text
 
 
             new_game = Game(
@@ -34,8 +42,7 @@ def parse_name_list():
                 price=parse_price,
                 cover_url=parse_cover_url["src"],
                 description=parse_description,
-                publisher=publisher,
-                release_date=release_date
+                publisher=publisher
             )
 
             session.add(new_game)

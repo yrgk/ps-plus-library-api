@@ -6,8 +6,10 @@ class GameBase(BaseModel):
     price: str
     cover_url: HttpUrl
     description: str
+    publisher: str
+
 
 class GameBaseInList(BaseModel):
     id: int
     name: str
-    cover_url: str
+    cover_url: HttpUrl
